@@ -1,0 +1,59 @@
+openapi: 3.0.0
+info:
+  title: Product Service API
+  description: RS School NodeJS AWS Task 3 - Product Service documentation
+  version: 1.0.0
+servers:
+  - url: https://ve90dp6c1e.execute-api.eu-north-1.amazonaws.com/prod
+    description: Production server
+
+paths:
+  /products:
+    get:
+      summary: Get all products
+      responses:
+        '200':
+          description: A list of products
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+
+  /products/{productId}:
+    get:
+      summary: Get a product by ID
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A single product
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '404':
+          description: Product not found
+
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        price:
+          type: number
+        description:
+          type: string
+      required:
+        - id
+        - title
+        - price
